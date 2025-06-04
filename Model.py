@@ -99,7 +99,7 @@ data.resample_gen_profiles(n,net_name=network_name.replace('{}H'.format(resample
 saved_potential=n.generators.p_nom_max[n.generators.p_nom_extendable==True]
 phase_out_removal,yearly_phase_out=Myopic.Phase_out(n,'coal',2036)
 phase_out_removal_lignite,yearly_phase_out_lignite=Myopic.Phase_out(n,'lignite',2036)
-n.storage_units.p_nom_extendable=False ##To dobule check
+n.storage_units.p_nom_extendable=False # To double check
 
 
 co2lims = pd.read_csv('data/co2limits.csv') ##co2lims = pd.read_csv('co2limits.csv')
