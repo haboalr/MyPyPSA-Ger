@@ -483,19 +483,31 @@ def resample_gen_profiles(n,net_name,resample_factor):
         if (i not in gen_profiles.columns) | (math.isnan(gen_profiles[i][0])):
             continue
         else:
-            data= pd.DataFrame ({'electricity':gen_profiles[i]})
-            logger.info("Correcting {} generation profile: {} CF instead of {}".format(i,
-                                                                        round(data.electricity.mean(),3),
-                                                                        round(n.generators_t.p_max_pu[i].mean(),3)))
+            data = pd.DataFrame({'electricity': gen_profiles[i]})
+            logger.info(
+                "Correcting {} generation profile: {} CF instead of {}".format(
+                    i,
+                    round(data.electricity.mean(), 3),
+                    round(n.generators_t.p_max_pu[i].mean(), 3),
+                )
+            )
+            n.generators_t.p_max_pu[i] = data.electricity.values
+
 
     for i in n.generators.index[n.generators.carrier=='onwind']:
         if (i not in gen_profiles.columns) | (math.isnan(gen_profiles[i][0])):
             continue
         else:
-            data= pd.DataFrame ({'electricity':gen_profiles[i]})
-            logger.info("Correcting {} generation profile: {} CF instead of {}".format(i,
-                                                                        round(data.electricity.mean(),3),
-                                                                        round(n.generators_t.p_max_pu[i].mean(),3)))
+            data = pd.DataFrame({'electricity': gen_profiles[i]})
+            logger.info(
+                "Correcting {} generation profile: {} CF instead of {}".format(
+                    i,
+                    round(data.electricity.mean(), 3),
+                    round(n.generators_t.p_max_pu[i].mean(), 3),
+                )
+            )
+            n.generators_t.p_max_pu[i] = data.electricity.values
+
 
 
 def update_rens_profiles(n,reference_year):
@@ -545,10 +557,15 @@ def update_rens_profiles(n,reference_year):
         else:
             data= pd.DataFrame ({'electricity':gen_profiles[i]})
 
-        logger.info("Correcting {} generation profile: {} CF instead of {}".format(i,
-                                                                    round(data.electricity.mean(),3),
-                                                                    round(n.generators_t.p_max_pu[i].mean(),3)))
-        gen_profiles[i]=n.generators_t.p_max_pu[i]
+        logger.info(
+            "Correcting {} generation profile: {} CF instead of {}".format(
+                i,
+                round(data.electricity.mean(), 3),
+                round(n.generators_t.p_max_pu[i].mean(), 3),
+            )
+        )
+        n.generators_t.p_max_pu[i] = data.electricity.values
+        gen_profiles[i] = data.electricity.values
         gen_profiles.to_csv('{}/gen_profiles.csv'.format(name))
 
     #Onwind
@@ -582,11 +599,16 @@ def update_rens_profiles(n,reference_year):
         else:
             data= pd.DataFrame ({'electricity':gen_profiles[i]})
 
-        logger.info("Correcting {} generation profile: {} CF instead of {}".format(i,
-                                                                    round(data.electricity.mean(),3),
-                                                                    round(n.generators_t.p_max_pu[i].mean(),3)))
+        logger.info(
+            "Correcting {} generation profile: {} CF instead of {}".format(
+                i,
+                round(data.electricity.mean(), 3),
+                round(n.generators_t.p_max_pu[i].mean(), 3),
+            )
+        )
 
-        gen_profiles[i]=n.generators_t.p_max_pu[i]
+        n.generators_t.p_max_pu[i] = data.electricity.values
+        gen_profiles[i] = data.electricity.values
         gen_profiles.to_csv('{}/gen_profiles.csv'.format(name))
     
 
